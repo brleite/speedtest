@@ -16,7 +16,10 @@ CONTROLE_LATENCIA=/tmp/controle_latencia.txt
 PYTHON_NOTIFY=$BASEDIR/notify.py
 
 speedtest --format=csv > $TMPFILE
-cat $TMPFILE >> $HISTORICO
+
+HISTORICO_TMP=`cat $TMPFILE`
+HISTORICO_TMP="\""`date "+%Y-%m-%d %T"`"\",$HISTORICO_TMP" 
+echo "$HISTORICO_TMP" >> $HISTORICO
 
 LATENCIA_ORIGINAL=`cut -d , -f 3 $TMPFILE | sed "s/\"//g"`
 LATENCIA=`echo $LATENCIA_ORIGINAL | sed "s/\.//g"`
